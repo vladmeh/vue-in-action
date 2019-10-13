@@ -22,3 +22,6 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+#### Add Tailwind Css
+See [vue-cli-plugin-tailwind](https://github.com/forsartis/vue-cli-plugin-tailwind)
