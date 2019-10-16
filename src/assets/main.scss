@@ -1,5 +1,7 @@
 @tailwind base;
 
+@import "components/button";
+
 h1 {
     @apply text-2xl;
 }
