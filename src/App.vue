@@ -4,7 +4,9 @@
             <div class="container mx-auto">
                 <nav class="flex justify-between items-center py-4">
                     <h1 v-text="sitename"></h1>
-                    <button class="button is-outlined focus:outline-none">
+                    <button class="button is-outlined focus:outline-none"
+                            @click="showCheckout"
+                    >
                         <span :class="cartItemCount !== '' ? 'mr-2' : ''" v-text="cartItemCount"></span>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -19,25 +21,28 @@
             </div>
         </header>
         <main class="py-4 container mx-auto">
-            <div class="flex mb-4 items-center">
-                <div class="w-1/3">
-                    <figure>
-                        <img :src="product.image" :alt="product.title">
-                    </figure>
-                </div>
-                <div class="w-2/3">
-                    <h1 class="mb-8 text-4xl" v-text="product.title"></h1>
-                    <p v-html="product.description"></p>
-                    <p :text-content.prop="product.price | formatPrice" class="price"></p>
-                    <button class="button button-blue mt-10 focus:outline-none"
-                            @click="addToCart"
-                            v-if="canAddToCart"
-                    >Add to Cart</button>
-                    <button class="button button-blue is-outlined mt-10 focus:outline-none"
-                            v-else
-                    >Add to Cart</button>
+            <div v-if="showProduct">
+                <div class="flex mb-4 items-center">
+                    <div class="w-1/3">
+                        <figure>
+                            <img :src="product.image" :alt="product.title">
+                        </figure>
+                    </div>
+                    <div class="w-2/3">
+                        <h1 class="mb-8 text-4xl" v-text="product.title"></h1>
+                        <p v-html="product.description"></p>
+                        <p :text-content.prop="product.price | formatPrice" class="price"></p>
+                        <button class="button button-blue mt-10 focus:outline-none"
+                                @click="addToCart"
+                                v-if="canAddToCart"
+                        >Add to Cart</button>
+                        <button class="button button-blue is-outlined mt-10 focus:outline-none"
+                                v-else
+                        >Add to Cart</button>
+                    </div>
                 </div>
             </div>
+            <div v-else></div>
         </main>
     </div>
 </template>
@@ -58,18 +63,22 @@
                     availableInventory: 5,
                 },
                 cart: [],
+                showProduct: true,
             }
         },
         methods: {
             addToCart(){
                 this.cart.push(this.product.id);
+            },
+            showCheckout(){
+                this.showProduct = !this.showProduct;
             }
         },
         computed: {
-            cartItemCount: function () {
+            cartItemCount() {
                 return this.cart.length || '';
             },
-            canAddToCart: function () {
+            canAddToCart() {
                 return this.product.availableInventory > this.cartItemCount;
             }
         }
