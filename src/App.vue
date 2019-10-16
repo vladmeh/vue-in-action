@@ -5,7 +5,7 @@
                 <nav class="flex justify-between items-center py-4">
                     <h1 v-text="sitename"></h1>
                     <button class="button is-outlined focus:outline-none">
-
+                        <span :class="cartItemCount !== '' ? 'mr-2' : ''" v-text="cartItemCount"></span>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                              class="stroke-current inline-block h-4 w-4 mb-1 mr-1">
@@ -60,5 +60,10 @@
                 this.cart.push(this.product.id);
             }
         },
+        computed: {
+            cartItemCount: function () {
+                return this.cart.length || '';
+            }
+        }
     }
 </script>
