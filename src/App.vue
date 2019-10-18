@@ -54,7 +54,7 @@
                                 <input class="block w-full border p-2 text-xs rounded focus:outline-none"
                                        id="first-name"
                                        type="text"
-                                       v-model="order.firstName"
+                                       v-model.trim.lazy="order.firstName"
                                 >
                             </div>
                             <div class="w-1/2 ml-2">
@@ -62,7 +62,7 @@
                                 <input class="block w-full border p-2 text-xs rounded focus:outline-none"
                                        id="last-name"
                                        type="text"
-                                       v-model="order.lastName"
+                                       v-model.trim.lazy="order.lastName"
                                 >
                             </div>
                         </div>
@@ -72,7 +72,7 @@
                                 <input class="block w-full border p-2 text-xs rounded focus:outline-none"
                                        id="address"
                                        type="text"
-                                       v-model="order.address"
+                                       v-model.trim.lazy="order.address"
                                 >
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                                 <input class="block w-full border p-2 text-xs rounded focus:outline-none"
                                        id="city"
                                        type="text"
-                                       v-model="order.city"
+                                       v-model.trim.lazy="order.city"
                                 >
                             </div>
                         </div>
@@ -113,8 +113,8 @@
                                 <label class="text-sm block" for="postal-code">ZIP/Postal code:</label>
                                 <input class="block w-full border p-2 text-xs rounded focus:outline-none"
                                        id="postal-code"
-                                       type="text"
-                                       v-model="order.postalCode"
+                                       type="number"
+                                       v-model.number="order.postalCode"
                                 >
                             </div>
                         </div>
