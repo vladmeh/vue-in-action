@@ -47,7 +47,7 @@
             <div v-else>
                 <div class="max-w-5xl mx-auto overflow-hidden rounded shadow-lg">
                     <div class="bg-gray-200 px-10 py-3 text-gray-500 text-xl">Pet Depot Checkout</div>
-                    <div class="p-10">
+                    <form class="p-10">
                         <div class="flex mb-4">
                             <div class="w-1/2 mr-2">
                                 <label class="text-sm block" for="first-name">First Name:</label>
@@ -95,10 +95,11 @@
                                             v-model="order.state"
                                     >
                                         <option disabled value="">State</option>
-                                        <option>AL</option>
-                                        <option>AR</option>
-                                        <option>CA</option>
-                                        <option>NV</option>
+                                        <option v-for="(state, key) in states"
+                                                :key="state.id"
+                                                :value="state"
+                                                v-text="key"
+                                        ></option>
                                     </select>
                                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -121,6 +122,8 @@
                             <label class="flex items-center mr-2 w-1/2">
                                 <input class="mr-2 leading-tight"
                                        type="checkbox"
+                                       :true-value="order.sendGift"
+                                       :false-value="order.dontSendGift"
                                        v-model="order.gift"
                                 >
                                 <span class="text-sm">Ship As Gift?</span>
@@ -130,7 +133,7 @@
                                     <label class="flex items-center mr-8">
                                         <input class="mr-2 leading-tight"
                                                type="radio"
-                                               value="Home"
+                                               :value="order.home"
                                                v-model="order.method"
                                         >
                                         <span class="text-sm">Home</span>
@@ -138,7 +141,7 @@
                                     <label class="flex items-center">
                                         <input class="mr-2 leading-tight"
                                                type="radio"
-                                               value="Business"
+                                               :value="order.business"
                                                v-model="order.method"
                                         >
                                         <span class="text-sm">Business</span>
@@ -152,7 +155,7 @@
                             >Place Order
                             </button>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="flex mb-4 mt-10">
                     <div class="bg-gray-200 pt-6 shadow-inner w-full">
@@ -162,7 +165,7 @@
                             Address: {{ order.address }}
                             City: {{ order.city }}
                             State: {{ order.state }}
-                            State: {{ order.postalCode }}
+                            Zip Code: {{ order.postalCode }}
                             Method: {{ order.method }}
                             Gift: {{ order.gift }}
                         </pre>
@@ -197,8 +200,18 @@
                     city: '',
                     state: '',
                     postalCode: '',
-                    method: 'Home',
-                    gift: false
+                    method: 'Home Address',
+                    business: 'Business Address',
+                    home: 'Home Address',
+                    gift: 'Send As A Gift',
+                    sendGift: 'Send As A Gift',
+                    dontSendGift: 'Do Not Send As A Gift',
+                },
+                states: {
+                    AL: 'Alabama',
+                    AR: 'Arizona',
+                    CA: 'California',
+                    NV: 'Nevada',
                 }
             }
         },
