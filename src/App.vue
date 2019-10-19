@@ -20,23 +20,26 @@
                 </nav>
             </div>
         </header>
-        <main class="py-4 container mx-auto">
+        <main class="py-10 container mx-auto">
             <div v-if="showProduct">
-                <div class="flex mb-4 items-center">
+                <div class="flex mb-10 items-center"
+                     v-for="product in sortedProducts"
+                     :key="product.id"
+                >
                     <div class="w-1/3">
                         <figure>
                             <img :src="product.image" :alt="product.title">
                         </figure>
                     </div>
-                    <div class="w-1/3">
+                    <div class="w-1/3 pl-20">
                         <h1 class="mb-8 text-4xl" v-text="product.title"></h1>
                         <p v-html="product.description"></p>
                         <p :text-content.prop="product.price | formatPrice" class="price"></p>
                         <div class="flex items-center justify-between mt-10">
                             <div>
                                 <button class="button button-blue focus:outline-none"
-                                        @click="addToCart"
-                                        v-if="canAddToCart"
+                                        @click="addToCart(product)"
+                                        v-if="canAddToCart(product)"
                                 >Add to Cart
                                 </button>
                                 <button class="button button-blue is-outlined focus:outline-none"
@@ -44,18 +47,18 @@
                                 >Add to Cart
                                 </button>
                                 <span class="font-medium ml-4"
-                                      v-if="product.availableInventory - cartItemCount === 0"
+                                      v-if="product.availableInventory - cartCount(product.id) === 0"
                                 >All Out!</span>
                                 <span class="font-medium ml-4"
-                                      v-else-if="product.availableInventory - cartItemCount < 5"
-                                >Only {{ product.availableInventory - cartItemCount }} left!</span>
+                                      v-else-if="product.availableInventory - cartCount(product.id) < 5"
+                                >Only {{ product.availableInventory - cartCount(product.id) }} left!</span>
                                 <span class="font-medium ml-4"
                                       v-else
                                 >By Now!</span>
                             </div>
                             <div>
                                 <span class="text-xl"
-                                      :class="{'rating-active' : checkRating(n)}"
+                                      :class="{'rating-active' : checkRating(n, product)}"
                                       v-for="n in 5"
                                       :key="n"
                                 >☆</span>
@@ -197,21 +200,15 @@
 </template>
 
 <script>
+    /* eslint-disable */
+    import axios from 'axios';
+
     export default {
         name: 'app',
         data() {
             return {
                 sitename: 'Vue.js Pet Depot',
-                product: {
-                    id: 1001,
-                    title: "Cat Food, 25lb bag",
-                    description: "A 25 pound bag of <em>irresistible</em>," +
-                        "organic goodness for your cat.",
-                    price: 2000,
-                    image: "./assets/images/product-fullsize.png",
-                    availableInventory: 10,
-                    rating: 3,
-                },
+                products: [],
                 cart: [],
                 showProduct: true,
                 order: {
@@ -236,9 +233,15 @@
                 }
             }
         },
+        created(){
+            axios.get('../data/products.json')
+                .then((response) => {
+                    this.products = response.data.products;
+                });
+        },
         methods: {
-            addToCart() {
-                this.cart.push(this.product.id);
+            addToCart(product) {
+                this.cart.push(product.id);
             },
             showCheckout() {
                 this.showProduct = !this.showProduct;
@@ -246,16 +249,40 @@
             submitForm() {
                 alert('Submitter')
             },
-            checkRating(n){
-                return this.product.rating - n >= 0;
+            checkRating(n, product){
+                return product.rating - n >= 0;
+            },
+            canAddToCart(product) {
+                return product.availableInventory > this.cartCount(product.id);
+            },
+            cartCount(id){
+                let count = 0;
+                for (let i = 0; i < this.cart.length; i++) {
+                    if (this.cart[i] === id){
+                        count++;
+                    }
+                }
+                return count;
             },
         },
         computed: {
             cartItemCount() {
                 return this.cart.length || '';
             },
-            canAddToCart() {
-                return this.product.availableInventory > this.cartItemCount;
+            sortedProducts() {
+                if (this.products.length > 0) {
+                    let productsArray = this.products.slice(0);
+                    function compare(a, b) {
+                        if (a.title.toLowerCase() < b.title.toLowerCase()){
+                            return -1;
+                        }
+                        if (a.title.toLowerCase() > b.title.toLowerCase()){
+                            return 1;
+                        }
+                        return 0;
+                    }
+                    return productsArray.sort(compare);
+                }
             }
         }
     }
