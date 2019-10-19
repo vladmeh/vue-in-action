@@ -233,7 +233,7 @@
                 }
             }
         },
-        created(){
+        created() {
             axios.get('../data/products.json')
                 .then((response) => {
                     this.products = response.data.products;
@@ -249,16 +249,16 @@
             submitForm() {
                 alert('Submitter')
             },
-            checkRating(n, product){
+            checkRating(n, product) {
                 return product.rating - n >= 0;
             },
             canAddToCart(product) {
                 return product.availableInventory > this.cartCount(product.id);
             },
-            cartCount(id){
+            cartCount(id) {
                 let count = 0;
                 for (let i = 0; i < this.cart.length; i++) {
-                    if (this.cart[i] === id){
+                    if (this.cart[i] === id) {
                         count++;
                     }
                 }
@@ -272,15 +272,17 @@
             sortedProducts() {
                 if (this.products.length > 0) {
                     let productsArray = this.products.slice(0);
+
                     function compare(a, b) {
-                        if (a.title.toLowerCase() < b.title.toLowerCase()){
+                        if (a.title.toLowerCase() < b.title.toLowerCase()) {
                             return -1;
                         }
-                        if (a.title.toLowerCase() > b.title.toLowerCase()){
+                        if (a.title.toLowerCase() > b.title.toLowerCase()) {
                             return 1;
                         }
                         return 0;
                     }
+
                     return productsArray.sort(compare);
                 }
             }
