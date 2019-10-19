@@ -41,6 +41,15 @@
                                 v-else
                         >Add to Cart
                         </button>
+                        <span class="font-medium ml-4"
+                              v-if="product.availableInventory - cartItemCount === 0"
+                        >All Out!</span>
+                        <span class="font-medium ml-4"
+                              v-else-if="product.availableInventory - cartItemCount < 5"
+                        >Only {{ product.availableInventory - cartItemCount }} left!</span>
+                        <span class="font-medium ml-4"
+                              v-else
+                        >By Now!</span>
                     </div>
                 </div>
             </div>
@@ -189,7 +198,7 @@
                         "organic goodness for your cat.",
                     price: 2000,
                     image: "./assets/images/product-fullsize.png",
-                    availableInventory: 5,
+                    availableInventory: 10,
                 },
                 cart: [],
                 showProduct: true,
