@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Literal Props</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+    <my-component :my-info="message"/>
+</div>
+<script type="text/x-template" id="my-component">
+    <div>
+        <p>Hello from x-template, {{ myInfo }}</p>
+    </div>
+</script>
+<script>
+    const MyComponent = {
+        template: '#my-component',
+        props: ['myInfo'],
+    };
+
+    let app = new Vue({
+        el: '#app',
+        components: {'my-component': MyComponent},
+        data: {
+            message: 'Hello World',
+        }
+    })
+</script>
+</body>
+</html>
