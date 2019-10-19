@@ -28,28 +28,39 @@
                             <img :src="product.image" :alt="product.title">
                         </figure>
                     </div>
-                    <div class="w-2/3">
+                    <div class="w-1/3">
                         <h1 class="mb-8 text-4xl" v-text="product.title"></h1>
                         <p v-html="product.description"></p>
                         <p :text-content.prop="product.price | formatPrice" class="price"></p>
-                        <button class="button button-blue mt-10 focus:outline-none"
-                                @click="addToCart"
-                                v-if="canAddToCart"
-                        >Add to Cart
-                        </button>
-                        <button class="button button-blue is-outlined mt-10 focus:outline-none"
-                                v-else
-                        >Add to Cart
-                        </button>
-                        <span class="font-medium ml-4"
-                              v-if="product.availableInventory - cartItemCount === 0"
-                        >All Out!</span>
-                        <span class="font-medium ml-4"
-                              v-else-if="product.availableInventory - cartItemCount < 5"
-                        >Only {{ product.availableInventory - cartItemCount }} left!</span>
-                        <span class="font-medium ml-4"
-                              v-else
-                        >By Now!</span>
+                        <div class="flex items-center justify-between mt-10">
+                            <div>
+                                <button class="button button-blue focus:outline-none"
+                                        @click="addToCart"
+                                        v-if="canAddToCart"
+                                >Add to Cart
+                                </button>
+                                <button class="button button-blue is-outlined focus:outline-none"
+                                        v-else
+                                >Add to Cart
+                                </button>
+                                <span class="font-medium ml-4"
+                                      v-if="product.availableInventory - cartItemCount === 0"
+                                >All Out!</span>
+                                <span class="font-medium ml-4"
+                                      v-else-if="product.availableInventory - cartItemCount < 5"
+                                >Only {{ product.availableInventory - cartItemCount }} left!</span>
+                                <span class="font-medium ml-4"
+                                      v-else
+                                >By Now!</span>
+                            </div>
+                            <div>
+                                <span class="text-xl"
+                                      :class="{'rating-active' : checkRating(n)}"
+                                      v-for="n in 5"
+                                      :key="n"
+                                >☆</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -199,6 +210,7 @@
                     price: 2000,
                     image: "./assets/images/product-fullsize.png",
                     availableInventory: 10,
+                    rating: 3,
                 },
                 cart: [],
                 showProduct: true,
@@ -233,7 +245,10 @@
             },
             submitForm() {
                 alert('Submitter')
-            }
+            },
+            checkRating(n){
+                return this.product.rating - n >= 0;
+            },
         },
         computed: {
             cartItemCount() {
@@ -245,3 +260,10 @@
         }
     }
 </script>
+
+<style scoped lang="scss">
+    .rating-active:before {
+        content: "\2605";
+        position: absolute;
+    }
+</style>
