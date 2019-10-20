@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Parent Child</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+    <form-component
+            :author="authorLabel"
+            :title="titleLabel"
+    ></form-component>
+</div>
+<script>
+    const FormComponent =  {
+        template: `
+        <div>
+            <form>
+                <label for="title">{{title}}</label>
+                <input type="text" id="title"><br/>
+                <label for="author">{{author}}</label>
+                <input type="text" id="author"><br/>
+                <button>Submit</button>
+            </form>
+        </div>
+        `,
+        props: ['title', 'author']
+    };
+
+    let app = new Vue({
+        el: '#app',
+        components: {'form-component' : FormComponent},
+        data(){
+            return {
+                titleLabel: 'The Title',
+                authorLabel: 'The Author',
+            }
+        }
+    })
+</script>
+</body>
+</html>
