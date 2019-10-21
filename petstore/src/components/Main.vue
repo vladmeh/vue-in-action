@@ -12,7 +12,12 @@
                     </figure>
                 </div>
                 <div class="w-1/3 pl-20">
-                    <h1 class="mb-8 text-4xl" v-text="product.title"></h1>
+                    <router-link
+                            tag="h1"
+                            :to="{ name: 'Id', params: {id: product.id}}"
+                            class="mb-8 text-4xl cursor-pointer"
+                            v-text="product.title"
+                    ></router-link>
                     <p v-html="product.description"></p>
                     <p :text-content.prop="product.price | formatPrice" class="price"></p>
                     <div class="flex items-center justify-between mt-10">
@@ -22,7 +27,7 @@
                                     v-if="canAddToCart(product)"
                             >Add to Cart
                             </button>
-                            <button class="button button-blue is-outlined focus:outline-none"
+                            <button class="button button-blue focus:outline-none opacity-50 cursor-not-allowed"
                                     v-else
                             >Add to Cart
                             </button>

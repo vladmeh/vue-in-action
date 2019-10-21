@@ -8,8 +8,11 @@
                             v-text="sitename"
                     ></router-link>
                 </h1>
-                <button class="button is-outlined focus:outline-none"
-                        @click="showCheckout"
+                <router-link
+                        :to="{name: 'Form'}"
+                        active-class="active"
+                        tag="button"
+                        class="button is-outlined focus:outline-none"
                 >
                     <span :class="cartItemCount !== '' ? 'mr-2' : ''" v-text="cartItemCount"></span>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -20,7 +23,7 @@
                         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                     </svg>
                     Checkout
-                </button>
+                </router-link>
             </nav>
         </div>
     </header>
@@ -35,11 +38,6 @@
                 sitename: 'Vue.js Pet Depot',
             }
         },
-        methods: {
-            showCheckout(){
-                this.$router.push({name: 'Form'})
-            }
-        }
     }
 </script>
 

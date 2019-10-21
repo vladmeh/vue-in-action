@@ -4,12 +4,16 @@
   &-blue{
     @apply bg-blue-500;
 
-    &:hover {
+    &:hover, &.active {
       @apply bg-blue-700;
     }
   }
 
   &.is-outlined {
     @apply bg-white border border-gray-500 text-gray-500;
+  }
+
+  &:hover, &.active{
+    @apply text-gray-700 bg-gray-200;
   }
 }
