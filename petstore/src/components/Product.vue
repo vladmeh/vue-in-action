@@ -12,6 +12,13 @@
                     <h1 class="mb-8 text-4xl" v-text="product.title"></h1>
                     <p v-html="product.description"></p>
                     <p :text-content.prop="product.price | formatPrice" class="price"></p>
+                    <div class="flex items-center justify-between mt-10">
+                        <router-link :to="{ name: 'Edit' }"
+                                     tag="button"
+                                     class="button button-blue focus:outline-none"
+                        >Edit Product</router-link>
+                        <router-view></router-view>
+                    </div>
                 </div>
             </div>
         </main>
@@ -38,7 +45,7 @@
                     )[0];
                     this.product.image = '/' + this.product.image;
                 });
-        }
+        },
     }
 </script>
 
