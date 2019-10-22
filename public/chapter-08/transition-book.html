@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transition Book</title>
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+        .fade-enter-active, .fade-leave-active{
+            transition: opacity 3.0s ease-out;
+        }
+        .fade-enter, .fade-leave-to{
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div @click="show = !show">
+        <h2 v-text="title"></h2>
+    </div>
+    <transition name="fade">
+        <div v-if="show">
+            <h1 v-text="description"></h1>
+        </div>
+    </transition>
+</div>
+<script>
+    let app = new Vue({
+        el: '#app',
+        data() {
+            return {
+                title: 'War and Peace',
+                description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat',
+                show: false
+            }
+        }
+    })
+</script>
+</body>
+</html>
