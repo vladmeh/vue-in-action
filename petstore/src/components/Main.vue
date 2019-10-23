@@ -31,15 +31,20 @@
                                     v-else
                             >Add to Cart
                             </button>
-                            <span class="font-medium ml-4"
-                                  v-if="product.availableInventory - cartCount(product.id) === 0"
-                            >All Out!</span>
-                            <span class="font-medium ml-4"
-                                  v-else-if="product.availableInventory - cartCount(product.id) < 5"
-                            >Only {{ product.availableInventory - cartCount(product.id) }} left!</span>
-                            <span class="font-medium ml-4"
-                                  v-else
-                            >By Now!</span>
+                            <transition name="bounce" mode="out-in">
+                                <span class="font-medium ml-4"
+                                      v-if="product.availableInventory - cartCount(product.id) === 0"
+                                      key="0"
+                                >All Out!</span>
+                                <span class="font-medium ml-4"
+                                      v-else-if="product.availableInventory - cartCount(product.id) < 5"
+                                      key=""
+                                >Only {{ product.availableInventory - cartCount(product.id) }} left!</span>
+                                <span class="font-medium ml-4"
+                                      v-else
+                                      key=""
+                                >By Now!</span>
+                            </transition>
                         </div>
                         <div>
                                 <span class="text-xl"
@@ -125,5 +130,28 @@
     .rating-active:before {
         content: "\2605";
         position: absolute;
+    }
+
+    .bounce-enter-active {
+        animation: shake 0.72s cubic-bezier(.37, .07, .19, .97);
+        transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
+    }
+
+    @keyframes shake {
+        10%, 90% {
+            color: red;
+            transform: translate3d(-1px, 0, 0);
+        }
+        20%, 80% {
+            transform: translate3d(2px, 0, 0);
+        }
+        30%, 50%, 70% {
+            color: red;
+            transform: translate3d(-4px, 0, 0);
+        }
+        40%, 60% {
+            transform: translate3d(4px, 0, 0);
+        }
     }
 </style>
