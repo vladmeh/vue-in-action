@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title JS</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+    <my-comp header="1">Erik</my-comp>
+</div>
+<script>
+    Vue.component('my-comp', {
+        render(createElement){
+            return createElement('h' + this.header,{
+                'class': 'text-center',
+                on : {
+                    click(e){
+                        alert('Clicked');
+                    }
+                }
+            }, this.welcome + this.$slots.default[0].text)
+        },
+        data() {
+            return {
+                welcome: 'Hello World '
+            }
+        },
+        props: ['header']
+    });
+    new Vue({
+        el: '#app',
+    })
+</script>
+</body>
+</html>
