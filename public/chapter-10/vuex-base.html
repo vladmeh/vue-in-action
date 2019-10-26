@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vuex State</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vuex"></script>
+    <style>
+        h1 {
+            font-size: 3em;
+        }
+        h2 {
+            font-size: 2em;
+        }
+        h3 {
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <h1>{{header}}</h1>
+    <h2>{{welcome}}</h2>
+    <h3>{{counter}}</h3>
+    <button @click="increment">Press Me</button>
+</div>
+<script>
+    const store = new Vuex.Store({
+        state: {
+            msg: 'Hello World',
+            count: 0
+        },
+        mutations: {
+            increment(state, payload) {
+                state.count += payload;
+            }
+        }
+    });
+    let app = new Vue({
+        el: '#app',
+        data: {
+            header: 'Vuex App'
+        },
+        computed: {
+            welcome() {
+                return store.state.msg;
+            },
+            counter() {
+                return store.state.count;
+            }
+        },
+        methods: {
+            increment() {
+                store.commit('increment', 10);
+            }
+        }
+    })
+</script>
+</body>
+</html>
