@@ -2,8 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import './assets/main.scss'
+import { store } from './store/store';
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 Vue.filter('formatPrice', function (price) {
   if (!parseInt(price)) {
@@ -27,5 +28,6 @@ Vue.filter('formatPrice', function (price) {
 
 new Vue({
   router,
+  store,
   render: h => h(App)
-}).$mount('#app')
+}).$mount('#app');

@@ -61,22 +61,17 @@
 </template>
 
 <script>
-    import axios from 'axios';
     import MyHeader from './Header';
 
     export default {
         name: "Main",
         data() {
             return {
-                products: [],
                 cart: [],
             }
         },
         created() {
-            axios.get('../data/products.json')
-                .then((response) => {
-                    this.products = response.data.products;
-                });
+            this.$store.dispatch('initStore');
         },
         methods: {
             addToCart(product) {
@@ -99,6 +94,9 @@
             },
         },
         computed: {
+            products() {
+                return this.$store.getters.products;
+            },
             cartItemCount() {
                 return this.cart.length || '';
             },
@@ -118,7 +116,7 @@
 
                     return productsArray.sort(compare);
                 }
-            }
+            },
         },
         components: {
             MyHeader
