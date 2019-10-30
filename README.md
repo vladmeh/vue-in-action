@@ -24,4 +24,7 @@ yarn lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 #### Add Tailwind Css
-See [vue-cli-plugin-tailwind](https://github.com/forsartis/vue-cli-plugin-tailwind)
+See [vue-cli-plugin-tailwind](https://github.com/forsartis/vue-cli-plugin-tailwind).
+
+#### Add Vuetify 2.x for Nuxt
+See [Vuetify Module for Nuxt.js](https://github.com/nuxt-community/vuetify-module).
