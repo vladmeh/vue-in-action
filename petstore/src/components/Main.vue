@@ -4,7 +4,6 @@
         <main class="py-10 container mx-auto">
             <div class="flex mb-10 items-center"
                  v-for="product in sortedProducts"
-                 :key="product.id"
             >
                 <div class="w-1/3">
                     <figure>
@@ -63,17 +62,22 @@
 <script>
     import MyHeader from './Header';
     import {mapGetters} from 'vuex';
+    import {productsRef} from "../firebase";
 
     export default {
         name: "Main",
+        firebase: {
+            products: productsRef
+        },
         data() {
             return {
+                products: [],
                 cart: [],
             }
         },
-        created() {
-            this.$store.dispatch('initStore');
-        },
+        // created() {
+        //     this.$store.dispatch('initStore');
+        // },
         methods: {
             addToCart(product) {
                 this.cart.push(product.id);
@@ -96,7 +100,8 @@
         },
         computed: {
             ...mapGetters([
-                'products'
+                // 'products',
+                'session'
             ]),
             cartItemCount() {
                 return this.cart.length || '';

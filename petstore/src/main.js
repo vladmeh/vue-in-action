@@ -3,11 +3,12 @@ import App from './App.vue'
 import router from './router'
 import './assets/main.scss'
 import {store} from './store/store';
-import firebase from 'firebase';
-import './firebase';
-import VueFire from 'vuefire';
 
-Vue.use(VueFire);
+import './firebase';
+import {rtdbPlugin} from 'vuefire'
+
+Vue.use(rtdbPlugin);
+
 Vue.config.productionTip = false;
 
 Vue.filter('formatPrice', function (price) {
