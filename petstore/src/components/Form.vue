@@ -159,12 +159,13 @@
                     AR: 'Arizona',
                     CA: 'California',
                     NV: 'Nevada',
-                }
+                },
+                madeOrder: false,
             }
         },
         methods: {
             submitForm() {
-                alert('Submitter')
+                return this.madeOrder = true;
             },
         },
         components: {
