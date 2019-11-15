@@ -128,6 +128,7 @@
                         </pre>
                 </div>
             </div>
+            <div v-if="madeOrder">Ordered</div>
         </main>
     </div>
 </template>
